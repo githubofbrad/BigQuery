@@ -1,0 +1,18 @@
+#빅쿼리 내에서 기본 시간이 UTC기준이므로 9시간을 더하여 한국 시간대로 바꿔야 함
+#빅쿼리는 GA4 데이터를 일일 단위로 저장
+
+--230908 user_id별 날짜 데이터 출력
+SELECT user_id,
+       TIMESTAMP_SECONDS(CAST(CAST(event_timestamp as INT64)/1000000 as INT64)) + interval '9' hour as dt
+  FROM `mabiseo.analytics_405034176.events_20230908`
+  group by user_id, dt
+  order by dt
+
+
+
+--이벤트가 존재하는 모든 날짜에서 시간대별 이벤트 카운트하기
+SELECT extract(hour from TIMESTAMP_SECONDS(CAST(CAST(event_timestamp as INT64)/1000000 as INT64)) + interval '9' hour) as dt,
+       count(event_name)
+  FROM `mabiseo.analytics_405034176.events_*`
+  group by dt
+  order by 2 desc
