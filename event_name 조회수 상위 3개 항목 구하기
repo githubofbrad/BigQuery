@@ -1,0 +1,8 @@
+SELECT *
+  FROM (select event_name,
+               count(event_name)
+         from `mabiseo.analytics_405034176.events_*`
+         group by event_name
+         order by count(event_name) desc
+       ) 
+  limit 3
