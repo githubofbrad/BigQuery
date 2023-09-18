@@ -1,0 +1,11 @@
+--unnest를 사용하여 배열(array)푼 후 page_title 카운트하기
+ select b,
+       count(b)
+  from (SELECT params.key as a,
+               params.value.string_value as b
+          FROM `mabiseo.analytics_405034176.events_*`
+          cross join unnest (event_params) as params
+          where params.key = 'page_title'
+        )
+  group by 1
+  order by 2 desc 
