@@ -1,0 +1,5 @@
+select traffic_source.source,
+       count(traffic_source.source)
+  from `mabiseo.analytics_405034176.events_*`
+  group by 1
+  order by 2 desc
