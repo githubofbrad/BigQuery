@@ -1,0 +1,9 @@
+--날짜별 페이지뷰 카운트
+
+SELECT event_date,
+       count(event_name) as pageview 
+  FROM `mabiseo.analytics_405034176.events_*`
+  where event_name = 'page_view'
+  group by 1
+  having pageview >= 40
+  order by 2 desc
