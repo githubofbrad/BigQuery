@@ -1,0 +1,7 @@
+--IF문 활용하여 EVENT_NAME이 first_visit이면 user_pseudo_id를, 아니면 null을 출력
+
+SELECT EVENT_DATE,
+       count(IF(EVENT_NAME = 'first_visit', user_pseudo_id, null)) as fitst_visit
+  FROM `mabiseo.analytics_405034176.events_*`
+  GROUP BY EVENT_DATE
+  ORDER BY EVENT_DATE
