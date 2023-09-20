@@ -1,0 +1,9 @@
+--'첫 방문자 수/모든 방문자 수' 구한 후 round를 통해 반올림 진행
+  
+SELECT EVENT_DATE,
+       count(distinct user_pseudo_id) as all_visit,
+       count(IF(EVENT_NAME = 'first_visit', user_pseudo_id, null)) as fitst_visit,
+       round(count(IF(EVENT_NAME = 'first_visit', user_pseudo_id, null)) / count(distinct user_pseudo_id) * 100,1) as first_rate
+  FROM `mabiseo.analytics_405034176.events_*`
+  GROUP BY EVENT_DATE
+  ORDER BY EVENT_DATE
