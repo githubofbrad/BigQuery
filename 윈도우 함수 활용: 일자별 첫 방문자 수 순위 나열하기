@@ -1,0 +1,12 @@
+with first_date as( select event_date,
+                          count(event_name) as ct
+                      from `mabiseo.analytics_405034176.events_*`
+                      where event_name = 'first_visit'
+                      group by event_date
+                  )
+
+select event_date,
+       rank() over(order by ct desc) as rank1,
+       dense_rank() over(order by ct desc) as rank2,
+       row_number() over (order by ct desc) as rank3
+  from first_date
