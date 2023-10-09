@@ -1,0 +1,21 @@
+--with절 활용하여 날짜별 first_visit 카운트 
+with first_date as(select event_date,
+                            count(event_name) as ct
+                      from `mabiseo.analytics_405034176.events_*`
+                      where event_name = 'first_visit'
+                      group by event_date
+                   )
+
+--통계 분포 계산
+  select COUNT(ct) AS count,
+       AVG(ct) AS average,
+       MIN(ct) AS min_amount,
+       MAX(ct) AS max_amount
+   from first_date 
+
+
+--분산 및 표준편차 계산
+  SELECT VARIANCE(ct) AS 모집단의분산,
+         STDDEV_POP(ct) AS 모집단의표준편차,
+         STDDEV_SAMP(ct) AS 표본의표준편차    
+    FROM first_date 
